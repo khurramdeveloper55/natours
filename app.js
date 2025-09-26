@@ -63,14 +63,6 @@ app.use((req, res, next) => {
 
 app.use(compression());
 
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' https://js.stripe.com; connect-src 'self' https://api.stripe.com; frame-src https://js.stripe.com;"
-  );
-  next();
-});
-
 // 3) ROUTES
 app.use('/', viewsRouter);
 app.use('/api/v2/tours', tourRouter);

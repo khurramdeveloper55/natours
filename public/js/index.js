@@ -1,5 +1,7 @@
+import '@babel/polyfill';
 import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
+import { bookTour } from './stripe';
 
 const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
@@ -48,4 +50,12 @@ if (updateUserPassword)
     (document.getElementById('password-current').value = ''),
       (document.getElementById('password').value = ''),
       (document.getElementById('password-confirm').value = '');
+  });
+
+if (bookBtn)
+  bookBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.target.textContent = 'Processing...';
+    const { tourId } = e.target.dataset;
+    bookTour(tourId);
   });

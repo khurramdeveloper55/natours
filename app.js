@@ -3,7 +3,6 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const sanitize = require('express-mongo-sanitize');
-const compression = require('compression');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const path = require('path');
@@ -61,7 +60,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(compression());
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' https://js.stripe.com; connect-src 'self' https://api.stripe.com; frame-src https://js.stripe.com;"
+  );
+  next();
+});
 
 // 3) ROUTES
 app.use('/', viewsRouter);

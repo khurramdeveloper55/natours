@@ -14,9 +14,7 @@ const getStripe = () => {
 
 export const bookTour = async (tourId) => {
   try {
-    const session = await axios(
-      `http://127.0.0.1:3000/api/v2/bookings/checkout-session/${tourId}`
-    );
+    const session = await axios(`/api/v2/bookings/checkout-session/${tourId}`);
 
     const stripe = await getStripe();
     await stripe.redirectToCheckout({
